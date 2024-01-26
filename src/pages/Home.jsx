@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import ColorThief from 'colorthief';
+import iconBrand from '../assets/icon/icon-brand.svg';
 
 const Home = () => {
+  // State
   const [selectedPath, setSelectedPath] = useState(null);
   const [currentColor, setCurrentColor] = useState('#000000');
   const [backgroundPathColor, setBackgroundPathColor] = useState('#F89D21');
@@ -9,6 +12,7 @@ const Home = () => {
   const [lowerOuterQuadColor, setLowerOuterQuadColor] = useState('#000000');
   const [lowerInnerQuadColor, setLowerInnerQuadColor] = useState('#000000');
 
+  // Functions
   const handleColorChange = (color) => {
     if (selectedPath) {
       setCurrentColor(color);
@@ -46,6 +50,34 @@ const Home = () => {
       default:
         break;
     }
+  };
+
+  const uploadImage = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = async (event) => {
+      const img = new Image();
+
+      // Wait for image to load
+      img.onload = () => {
+        const colorThief = new ColorThief();
+        const colorPalette = colorThief.getPalette(img, 6);
+        // Set color palette for paths
+        setUpperOuterQuadColor(`rgb(${colorPalette[0].join(', ')})`);
+        setUpperInnerQuadColor(`rgb(${colorPalette[1].join(', ')})`);
+        setLowerOuterQuadColor(`rgb(${colorPalette[2].join(', ')})`);
+        setLowerInnerQuadColor(`rgb(${colorPalette[3].join(', ')})`);
+        // Set background color
+        setBackgroundPathColor(`rgb(${colorPalette[4].join(', ')})`);
+        // Set default color
+        setCurrentColor(`rgb(${colorPalette[5].join(', ')})`);
+      };
+
+      img.src = event.target.result;
+    };
+
+    reader.readAsDataURL(file);
   };
 
   return (
@@ -87,6 +119,9 @@ const Home = () => {
           onClick={() => handlePathSelect('lowerInnerQuad')}
         />
       </svg>
+
+      {/* Image Upload */}
+      <input type="file" onChange={uploadImage} />
     </div>
   );
 };
