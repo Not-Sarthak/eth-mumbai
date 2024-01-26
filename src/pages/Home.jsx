@@ -137,7 +137,7 @@ const Home = () => {
   };
 
   return (
-    <div className='flex justify-center items-center flex-col 2xl:p-[10px] pt-[100px]'>
+    <div className='flex justify-center items-center flex-col 2xl:p-[10px] pt-[80px]'>
       <div className='pt-4 text-xs text-center text-white/40'>
         Tap the colors to edit them or
       </div>
