@@ -179,7 +179,7 @@ const Home = () => {
           onClick={() => handlePathSelect('lowerInnerQuad')}
         />
       </svg>
-      <div className='mt-4 flex gap-2 items-center'>
+      <div className='mt-4 flex gap-1 md:gap-4 items-center'>
       {/* Background Path Color Picker */}
         <label htmlFor="backgroundPathColorPicker" className="text-xs text-center text-white/40">
           Background Color 🌈
