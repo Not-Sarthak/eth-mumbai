@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import ColorThief from 'colorthief';
 import iconBrand from '../assets/icon/icon-brand.svg';
 
@@ -11,6 +11,10 @@ const Home = () => {
   const [upperInnerQuadColor, setUpperInnerQuadColor] = useState('#000000');
   const [lowerOuterQuadColor, setLowerOuterQuadColor] = useState('#000000');
   const [lowerInnerQuadColor, setLowerInnerQuadColor] = useState('#000000');
+  const [uploadedImage, setUploadedImage] = useState(null);
+
+  // Ref for the SVG element
+  const svgRef = useRef(null);
 
   // Functions
   const handleColorChange = (color) => {
@@ -72,12 +76,56 @@ const Home = () => {
         setBackgroundPathColor(`rgb(${colorPalette[4].join(', ')})`);
         // Set default color
         setCurrentColor(`rgb(${colorPalette[5].join(', ')})`);
+        // Set uploaded image
+        setUploadedImage(event.target.result);
       };
 
       img.src = event.target.result;
     };
 
     reader.readAsDataURL(file);
+  };
+
+  const downloadSvg = () => {
+    const svgData = new XMLSerializer().serializeToString(svgRef.current);
+    const blob = new Blob([svgData], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+
+    // Create an anchor element and trigger the download
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'edited_image.svg';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const downloadPng = () => {
+    const svgData = new XMLSerializer().serializeToString(svgRef.current);
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    // Create a new Image object and set its source to the SVG data
+    const img = new Image();
+    img.onload = () => {
+      // Set canvas size to match the SVG
+      canvas.width = img.width;
+      canvas.height = img.height;
+      // Draw the image on the canvas
+      ctx.drawImage(img, 0, 0);
+
+      // Convert the canvas to a data URL and trigger the download
+      const dataUrl = canvas.toDataURL('image/png');
+      const a = document.createElement('a');
+      a.href = dataUrl;
+      a.download = 'edited_image.png';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    };
+
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgData);
   };
 
   return (
@@ -91,9 +139,16 @@ const Home = () => {
       />
 
       {/* SVG with individually colored paths */}
-      <svg width="400" height="400" viewBox="0 0 2400 2400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        ref={svgRef}
+        width="400"
+        height="400"
+        viewBox="0 0 2400 2400"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         {/* Background */}
-        <rect width="2400" height="2400" fill={backgroundPathColor}/> 
+        <rect width="2400" height="2400" fill={backgroundPathColor} />
         {/* Upper Outer Quad */}
         <path
           d="M1185.6 294.398L1758 1216L1196.4 1548.4L642 1210L1185.6 294.398Z"
@@ -122,6 +177,10 @@ const Home = () => {
 
       {/* Image Upload */}
       <input type="file" onChange={uploadImage} />
+
+      {/* Download buttons */}
+      <button onClick={downloadSvg}>Download SVG</button>
+      <button onClick={downloadPng}>Download PNG</button>
     </div>
   );
 };
