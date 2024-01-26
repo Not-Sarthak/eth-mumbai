@@ -179,7 +179,7 @@ const Home = () => {
           onClick={() => handlePathSelect('lowerInnerQuad')}
         />
       </svg>
-      <div className='mt-4 flex gap-4 items-center'>
+      <div className='mt-4 flex gap-2 items-center'>
       {/* Background Path Color Picker */}
         <label htmlFor="backgroundPathColorPicker" className="text-xs text-center text-white/40">
           Background Color 🌈
@@ -192,7 +192,7 @@ const Home = () => {
           onChange={(e) => handleBackgroundPathColorChange(e.target.value)}
           className='w-16 px-2 py-2 text-xs border rounded bg-white/10 border-white/40 transition-transform transform hover:scale-105'
         />
-        <div className="h-10 w-[0.2px] mx-2 bg-white/40"></div>        {/* Other Paths Color Picker */}
+        <div className="h-10 w-[0.2px] mx-2 bg-white/40"></div>     
         <label htmlFor="otherPathsColorPicker" className="text-xs text-center text-white/40">
           Other Paths Color 🌈
         </label>
