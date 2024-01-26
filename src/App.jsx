@@ -7,7 +7,7 @@ import Home from './pages/Home'
 const App = () => {
 
   return (
-    <div className='h-screen'>
+    <div className='h-screen bg-[#000000]'>
       <Navbar />
       <Routes>
         <Route path='/' element={<Home />} />

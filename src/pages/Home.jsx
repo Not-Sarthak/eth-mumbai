@@ -137,8 +137,11 @@ const Home = () => {
   };
 
   return (
-    <div className='flex justify-center items-center flex-col 2xl:p-[10px] pt-[80px]'>
-      <div className='pt-4 text-xs text-center text-white/40'>
+    <div className='flex justify-center items-center flex-col 2xl:p-[5px] 2xl:pt-[0px] pt-[80px]'>
+      <div className='text-[#F89D21] text-xl font-sans-serif pt-2'>
+        कसं काय मंडळी
+      </div>
+      <div className='pt-2 text-xs text-center text-white/40'>
         Tap the colors to edit them or
       </div>
       <div class="flex items-end justify-end m-2 mb-4">
@@ -227,9 +230,9 @@ const Home = () => {
             className="flex items-center justify-center w-auto px-2 py-2 mt-4 space-x-2 text-xs text-white border rounded bg-white/10 border-white/10 transition-transform transform hover:scale-105"
           >
             <span className='mt-0.5'>
-              <img className="w-[12px]" src={zorb} alt="Zorb" />
+              <img className="w-[12px] bg-white/0" src={zorb} alt="Zorb" />
             </span>
-            <span>Mint on Zora</span>
+            <span className='bg-white/0'>Mint on Zora</span>
           </button>
           </a>
         </div>
