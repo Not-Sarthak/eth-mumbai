@@ -12,9 +12,24 @@ const Home = () => {
   const [lowerOuterQuadColor, setLowerOuterQuadColor] = useState('#000000');
   const [lowerInnerQuadColor, setLowerInnerQuadColor] = useState('#FFFFFF');
   const [uploadedImage, setUploadedImage] = useState(null);
-  const [loading, setLoading] = useState(false);
+
+  const [backgroundPathPickerColor, setBackgroundPathPickerColor] = useState('#F89D21');
+  const [otherPathsPickerColor, setOtherPathsPickerColor] = useState('#000000');
 
   const svgRef = useRef(null);
+
+  const handleBackgroundPathColorChange = (color) => {
+    setBackgroundPathPickerColor(color);
+    setBackgroundPathColor(color);
+  };
+
+  const handleOtherPathsColorChange = (color) => {
+    setOtherPathsPickerColor(color);
+    if (selectedPath) {
+      setCurrentColor(color);
+      updateColor(selectedPath, color);
+    }
+  };
 
   const handleColorChange = (color) => {
     if (selectedPath) {
@@ -29,6 +44,7 @@ const Home = () => {
   const handlePathSelect = (path) => {
     setSelectedPath(path);
     setCurrentColor(
+      path === 'backgroundPathColor' ? backgroundPathColor :
       path === 'upperOuterQuad' ? upperOuterQuadColor :
       path === 'upperInnerQuad' ? upperInnerQuadColor :
       path === 'lowerOuterQuad' ? lowerOuterQuadColor :
@@ -38,6 +54,9 @@ const Home = () => {
 
   const updateColor = (path, color) => {
     switch (path) {
+      case 'backgroundPathColor':
+        setBackgroundPathColor(color);
+        break;
       case 'upperOuterQuad':
         setUpperOuterQuadColor(color);
         break;
@@ -118,7 +137,7 @@ const Home = () => {
   };
 
   return (
-    <div className='flex justify-center items-center flex-col 2xl:p-[20px] pt-[100px]'>
+    <div className='flex justify-center items-center flex-col 2xl:p-[10px] pt-[100px]'>
       <div className='pt-4 text-xs text-center text-white/40'>
         Tap the colors to edit them or
       </div>
@@ -160,20 +179,32 @@ const Home = () => {
           onClick={() => handlePathSelect('lowerInnerQuad')}
         />
       </svg>
-
-    <div className='mt-4 flex gap-4 items-center'>
-      <label htmlFor="colorPicker" className="text-xs text-center text-white/40">
-        Pick Your Favorite Color 🌈
-      </label>
-      <input
-        type="color"
-        id="colorPicker"
-        value={currentColor}
-        style={{ backgroundColor: currentColor }}
-        onChange={(e) => handleColorChange(e.target.value)}
-        className='w-16 px-2 py-2 text-xs border rounded bg-white/10 border-white/40 transition-transform transform hover:scale-105'
-      />
-    </div>
+      <div className='mt-4 flex gap-4 items-center'>
+      {/* Background Path Color Picker */}
+        <label htmlFor="backgroundPathColorPicker" className="text-xs text-center text-white/40">
+          Background Color 🌈
+        </label>
+        <input
+          type="color"
+          id="backgroundPathColorPicker"
+          value={backgroundPathPickerColor}
+          style={{ backgroundColor: backgroundPathPickerColor }}
+          onChange={(e) => handleBackgroundPathColorChange(e.target.value)}
+          className='w-16 px-2 py-2 text-xs border rounded bg-white/10 border-white/40 transition-transform transform hover:scale-105'
+        />
+        <div className="h-10 w-[0.2px] mx-2 bg-white/40"></div>        {/* Other Paths Color Picker */}
+        <label htmlFor="otherPathsColorPicker" className="text-xs text-center text-white/40">
+          Other Paths Color 🌈
+        </label>
+        <input
+          type="color"
+          id="otherPathsColorPicker"
+          value={otherPathsPickerColor}
+          style={{ backgroundColor: otherPathsPickerColor }}
+          onChange={(e) => handleOtherPathsColorChange(e.target.value)}
+          className='w-16 px-2 py-2 text-xs border rounded bg-white/10 border-white/40 transition-transform transform hover:scale-105'
+        />
+      </div>
 
 
       {/* Download buttons */}
