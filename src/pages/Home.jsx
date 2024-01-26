@@ -6,11 +6,11 @@ const Home = () => {
 
   const [selectedPath, setSelectedPath] = useState(null);
   const [currentColor, setCurrentColor] = useState('#000000');
-  const [backgroundPathColor, setBackgroundPathColor] = useState('#1e1e1e');
-  const [upperOuterQuadColor, setUpperOuterQuadColor] = useState('#F89D21');
-  const [upperInnerQuadColor, setUpperInnerQuadColor] = useState('#FFFFFF');
-  const [lowerOuterQuadColor, setLowerOuterQuadColor] = useState('#FFFFFF');
-  const [lowerInnerQuadColor, setLowerInnerQuadColor] = useState('#F89D21');
+  const [backgroundPathColor, setBackgroundPathColor] = useState('#F89D21');
+  const [upperOuterQuadColor, setUpperOuterQuadColor] = useState('#FFFFFF');
+  const [upperInnerQuadColor, setUpperInnerQuadColor] = useState('#000000');
+  const [lowerOuterQuadColor, setLowerOuterQuadColor] = useState('#000000');
+  const [lowerInnerQuadColor, setLowerInnerQuadColor] = useState('#FFFFFF');
   const [uploadedImage, setUploadedImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -202,6 +202,9 @@ const Home = () => {
           </button>
           </a>
         </div>
+      </div>
+      <div className='pt-4 text-xs text-center text-white/40'>
+        Created by <a href="https://twitter.com/0xSarthak13">0xSarthak13</a>
       </div>
     </div>
   );
