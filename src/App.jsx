@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Route, Routes } from 'react-router-dom';
 
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
 
 const App = () => {
+
   return (
     <div className='h-screen'>
       <Navbar />

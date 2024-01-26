@@ -1,22 +1,21 @@
 import React, { useState, useRef } from 'react';
 import ColorThief from 'colorthief';
-import iconBrand from '../assets/icon/icon-brand.svg';
+import zorb from '../assets/zorb.png';
 
 const Home = () => {
-  // State
+
   const [selectedPath, setSelectedPath] = useState(null);
   const [currentColor, setCurrentColor] = useState('#000000');
-  const [backgroundPathColor, setBackgroundPathColor] = useState('#F89D21');
-  const [upperOuterQuadColor, setUpperOuterQuadColor] = useState('#000000');
-  const [upperInnerQuadColor, setUpperInnerQuadColor] = useState('#000000');
-  const [lowerOuterQuadColor, setLowerOuterQuadColor] = useState('#000000');
-  const [lowerInnerQuadColor, setLowerInnerQuadColor] = useState('#000000');
+  const [backgroundPathColor, setBackgroundPathColor] = useState('#1e1e1e');
+  const [upperOuterQuadColor, setUpperOuterQuadColor] = useState('#F89D21');
+  const [upperInnerQuadColor, setUpperInnerQuadColor] = useState('#FFFFFF');
+  const [lowerOuterQuadColor, setLowerOuterQuadColor] = useState('#FFFFFF');
+  const [lowerInnerQuadColor, setLowerInnerQuadColor] = useState('#F89D21');
   const [uploadedImage, setUploadedImage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  // Ref for the SVG element
   const svgRef = useRef(null);
 
-  // Functions
   const handleColorChange = (color) => {
     if (selectedPath) {
       setCurrentColor(color);
@@ -62,8 +61,6 @@ const Home = () => {
 
     reader.onload = async (event) => {
       const img = new Image();
-
-      // Wait for image to load
       img.onload = () => {
         const colorThief = new ColorThief();
         const colorPalette = colorThief.getPalette(img, 6);
@@ -90,8 +87,6 @@ const Home = () => {
     const svgData = new XMLSerializer().serializeToString(svgRef.current);
     const blob = new Blob([svgData], { type: 'image/svg+xml' });
     const url = URL.createObjectURL(blob);
-
-    // Create an anchor element and trigger the download
     const a = document.createElement('a');
     a.href = url;
     a.download = 'edited_image.svg';
@@ -105,17 +100,11 @@ const Home = () => {
     const svgData = new XMLSerializer().serializeToString(svgRef.current);
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
-
-    // Create a new Image object and set its source to the SVG data
     const img = new Image();
     img.onload = () => {
-      // Set canvas size to match the SVG
       canvas.width = img.width;
       canvas.height = img.height;
-      // Draw the image on the canvas
       ctx.drawImage(img, 0, 0);
-
-      // Convert the canvas to a data URL and trigger the download
       const dataUrl = canvas.toDataURL('image/png');
       const a = document.createElement('a');
       a.href = dataUrl;
@@ -129,20 +118,17 @@ const Home = () => {
   };
 
   return (
-    <div>
-      {/* Color picker for all paths */}
-      <input
-        type="color"
-        value={currentColor}
-        style={{ backgroundColor: currentColor }}
-        onChange={(e) => handleColorChange(e.target.value)}
-      />
-
-      {/* SVG with individually colored paths */}
+    <div className='flex justify-center items-center flex-col 2xl:p-[20px] pt-[100px]'>
+      <div className='pt-4 text-xs text-center text-white/40'>
+        Tap the colors to edit them or
+      </div>
+      <div class="flex items-end justify-end m-2 mb-4">
+        <label for="file" class="px-2 py-2 text-xs border rounded text-white/50 bg-white/10 border-white/10 transition-transform transform hover:scale-105">Generate palette from image</label>
+        <input id="file" class="hidden file:p-0 file:border-none file:text-white file:bg-black" placeholder="Upload" type="file" accept="image/*" onChange={uploadImage} /> 
+      </div>
       <svg
         ref={svgRef}
-        width="400"
-        height="400"
+        className='border cursor-pointer rounded-md aspect-auto border-white/10 w-[300px] 2xl:w-[380px]'
         viewBox="0 0 2400 2400"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -175,12 +161,48 @@ const Home = () => {
         />
       </svg>
 
-      {/* Image Upload */}
-      <input type="file" onChange={uploadImage} />
+    <div className='mt-4 flex gap-4 items-center'>
+      <label htmlFor="colorPicker" className="text-xs text-center text-white/40">
+        Pick Your Favorite Color 🌈
+      </label>
+      <input
+        type="color"
+        id="colorPicker"
+        value={currentColor}
+        style={{ backgroundColor: currentColor }}
+        onChange={(e) => handleColorChange(e.target.value)}
+        className='w-16 px-2 py-2 text-xs border rounded bg-white/10 border-white/40 transition-transform transform hover:scale-105'
+      />
+    </div>
+
 
       {/* Download buttons */}
-      <button onClick={downloadSvg}>Download SVG</button>
-      <button onClick={downloadPng}>Download PNG</button>
+      <div className='flex items-center gap-4'>
+        <button
+          onClick={downloadSvg}
+          className='w-auto px-2 py-2 mt-4 text-xs text-white border rounded bg-white/10 border-white/10 transition-transform transform hover:scale-105'
+        >
+          Download SVG
+        </button>
+        <button
+          onClick={downloadPng}
+          className='w-auto px-2 py-2 mt-4 text-xs text-white border rounded bg-white/10 border-white/10 transition-transform transform hover:scale-105'
+        >
+          Download PNG
+        </button>
+        <div>
+          <a href="https://zora.co/create">
+          <button
+            className="flex items-center justify-center w-auto px-2 py-2 mt-4 space-x-2 text-xs text-white border rounded bg-white/10 border-white/10 transition-transform transform hover:scale-105"
+          >
+            <span className='mt-0.5'>
+              <img className="w-[12px]" src={zorb} alt="Zorb" />
+            </span>
+            <span>Mint on Zora</span>
+          </button>
+          </a>
+        </div>
+      </div>
     </div>
   );
 };
