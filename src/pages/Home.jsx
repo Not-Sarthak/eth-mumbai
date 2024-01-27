@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import ColorThief from 'colorthief';
 import zorb from '../assets/zorb.png';
 
@@ -13,8 +13,19 @@ const Home = () => {
   const [lowerInnerQuadColor, setLowerInnerQuadColor] = useState('#FFFFFF');
   const [uploadedImage, setUploadedImage] = useState(null);
 
+
   const [backgroundPathPickerColor, setBackgroundPathPickerColor] = useState('#F89D21');
   const [otherPathsPickerColor, setOtherPathsPickerColor] = useState('#000000');
+
+  const languageCollection = ["कसं काय मंडळी", "kas kai mandli","કસ કઇ મંડળી", "কাস কাই ম্যান্ডলি", "कस कई मंडली", "కస్ కై మండ్లి"]
+  const [currentLanguage, setCurrentLanguage] = useState(0)
+
+  useEffect(()=>{
+    const changeLanguage = setInterval(() =>{
+      setCurrentLanguage((language) => (language + 1) % languageCollection.length);
+    },1000);
+    return () => clearInterval(changeLanguage); 
+  },[])
 
   const svgRef = useRef(null);
 
@@ -45,10 +56,10 @@ const Home = () => {
     setSelectedPath(path);
     setCurrentColor(
       path === 'backgroundPathColor' ? backgroundPathColor :
-      path === 'upperOuterQuad' ? upperOuterQuadColor :
-      path === 'upperInnerQuad' ? upperInnerQuadColor :
-      path === 'lowerOuterQuad' ? lowerOuterQuadColor :
-      path === 'lowerInnerQuad' ? lowerInnerQuadColor : '#000000'
+        path === 'upperOuterQuad' ? upperOuterQuadColor :
+          path === 'upperInnerQuad' ? upperInnerQuadColor :
+            path === 'lowerOuterQuad' ? lowerOuterQuadColor :
+              path === 'lowerInnerQuad' ? lowerInnerQuadColor : '#000000'
     );
   };
 
@@ -139,14 +150,14 @@ const Home = () => {
   return (
     <div className='flex justify-center items-center flex-col 2xl:p-[5px] 2xl:pt-[0px] pt-[80px]'>
       <div className='text-[#F89D21] text-xl font-sans-serif pt-2'>
-        कसं काय मंडळी
+        {languageCollection[currentLanguage]}
       </div>
       <div className='pt-2 text-xs text-center text-white/40'>
         Tap the colors to edit them or
       </div>
       <div class="flex items-end justify-end m-2 mb-4">
         <label for="file" class="px-2 py-2 text-xs border rounded text-white/50 bg-white/10 border-white/10 transition-transform transform hover:scale-105">Generate palette from image</label>
-        <input id="file" class="hidden file:p-0 file:border-none file:text-white file:bg-black" placeholder="Upload" type="file" accept="image/*" onChange={uploadImage} /> 
+        <input id="file" class="hidden file:p-0 file:border-none file:text-white file:bg-black" placeholder="Upload" type="file" accept="image/*" onChange={uploadImage} />
       </div>
       <svg
         ref={svgRef}
@@ -183,7 +194,7 @@ const Home = () => {
         />
       </svg>
       <div className='mt-4 flex gap-1 md:gap-4 items-center'>
-      {/* Background Path Color Picker */}
+        {/* Background Path Color Picker */}
         <label htmlFor="backgroundPathColorPicker" className="text-xs text-center text-white/40">
           Background Color 🌈
         </label>
@@ -195,7 +206,7 @@ const Home = () => {
           onChange={(e) => handleBackgroundPathColorChange(e.target.value)}
           className='w-16 px-2 py-2 text-xs border rounded bg-white/10 border-white/40 transition-transform transform hover:scale-105'
         />
-        <div className="h-10 w-[0.2px] mx-2 bg-white/40"></div>     
+        <div className="h-10 w-[0.2px] mx-2 bg-white/40"></div>
         <label htmlFor="otherPathsColorPicker" className="text-xs text-center text-white/40">
           Other Paths Color 🌈
         </label>
@@ -226,14 +237,14 @@ const Home = () => {
         </button>
         <div>
           <a href="https://zora.co/create">
-          <button
-            className="flex items-center justify-center w-auto px-2 py-2 mt-4 space-x-2 text-xs text-white border rounded bg-white/10 border-white/10 transition-transform transform hover:scale-105"
-          >
-            <span className='mt-0.5'>
-              <img className="w-[12px] bg-white/0" src={zorb} alt="Zorb" />
-            </span>
-            <span className='bg-white/0'>Mint on Zora</span>
-          </button>
+            <button
+              className="flex items-center justify-center w-auto px-2 py-2 mt-4 space-x-2 text-xs text-white border rounded bg-white/10 border-white/10 transition-transform transform hover:scale-105"
+            >
+              <span className='mt-0.5'>
+                <img className="w-[12px] bg-white/0" src={zorb} alt="Zorb" />
+              </span>
+              <span className='bg-white/0'>Mint on Zora</span>
+            </button>
           </a>
         </div>
       </div>
