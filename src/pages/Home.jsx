@@ -17,7 +17,7 @@ const Home = () => {
   const [backgroundPathPickerColor, setBackgroundPathPickerColor] = useState('#F89D21');
   const [otherPathsPickerColor, setOtherPathsPickerColor] = useState('#000000');
 
-  const languageCollection = ["मंडळी", "mandli", "મંડળી", "ম্যান্ডলি", "मंडली", "మండ్లి","मंडळी"]
+  const languageCollection = ["मंडळी", "મંડળી", "ম্যান্ডলি", "मंडली", "మండ్లి","मंडळी"]
   const [currentLanguage, setCurrentLanguage] = useState(0)
 
   useEffect(() => {
