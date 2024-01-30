@@ -17,15 +17,17 @@ const Home = () => {
   const [backgroundPathPickerColor, setBackgroundPathPickerColor] = useState('#F89D21');
   const [otherPathsPickerColor, setOtherPathsPickerColor] = useState('#000000');
 
-  const languageCollection = ["कसं काय मंडळी", "kas kai mandli","કસ કઇ મંડળી", "কাস কাই ম্যান্ডলি", "कस कई मंडली", "కస్ కై మండ్లి"]
+  const languageCollection = ["मंडळी", "mandli", "મંડળી", "ম্যান্ডলি", "मंडली", "మండ్లి","मंडळी"]
   const [currentLanguage, setCurrentLanguage] = useState(0)
 
-  useEffect(()=>{
-    const changeLanguage = setInterval(() =>{
-      setCurrentLanguage((language) => (language + 1) % languageCollection.length);
-    },1000);
-    return () => clearInterval(changeLanguage); 
-  },[])
+  useEffect(() => {
+    const changeLanguage = setInterval(() => {
+      setCurrentLanguage((language) => (language + 1) % languageCollection.length)
+    }, 1000);
+    return () => {
+      clearInterval(changeLanguage);
+    };
+  }, [])
 
   const svgRef = useRef(null);
 
@@ -150,7 +152,8 @@ const Home = () => {
   return (
     <div className='flex justify-center items-center flex-col 2xl:p-[5px] 2xl:pt-[0px] pt-[80px]'>
       <div className='text-[#F89D21] text-xl font-sans-serif pt-2'>
-        {languageCollection[currentLanguage]}
+        कसं काय {languageCollection[currentLanguage]} 
+        
       </div>
       <div className='pt-2 text-xs text-center text-white/40'>
         Tap the colors to edit them or
