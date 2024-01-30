@@ -14,7 +14,7 @@ const Home = () => {
   const [uploadedImage, setUploadedImage] = useState(null);
 
   const handleTwitterShare = () => {
-    const twitterMessage = encodeURIComponent(" 🚀 Thrilled to share that I've secured approval for @ethmumbai, the FIRST @ethereum hackathon in Mumbai! 🌐 Ready to Build from Mumbai, for the World, from March 29th to 31st. Big thanks to @localpublicxyz for organizing this groundbreaking event!");
+    const twitterMessage = encodeURIComponent("gm @ethmumbai 🚀");
     const twitterUrl = `https://twitter.com/intent/tweet?text=${twitterMessage}`;
     window.open(twitterUrl, '_blank');
   };
