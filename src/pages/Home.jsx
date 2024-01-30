@@ -13,6 +13,11 @@ const Home = () => {
   const [lowerInnerQuadColor, setLowerInnerQuadColor] = useState('#FFFFFF');
   const [uploadedImage, setUploadedImage] = useState(null);
 
+  const handleTwitterShare = () => {
+    const twitterMessage = encodeURIComponent(" 🚀 Thrilled to share that I've secured approval for @ethmumbai, the FIRST @ethereum hackathon in Mumbai! 🌐 Ready to Build from Mumbai, for the World, from March 29th to 31st. Big thanks to @localpublicxyz for organizing this groundbreaking event!");
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${twitterMessage}`;
+    window.open(twitterUrl, '_blank');
+  };
 
   const [backgroundPathPickerColor, setBackgroundPathPickerColor] = useState('#F89D21');
   const [otherPathsPickerColor, setOtherPathsPickerColor] = useState('#000000');
@@ -152,8 +157,11 @@ const Home = () => {
       <div className='text-[#F89D21] text-xl font-sans-serif pt-2'>
         {languageCollection[currentLanguage]}
       </div>
-      <div className='pt-2 text-xs text-center text-white/40'>
-        Tap the colors to edit them or
+      <div className='pt-2 text-xs text-center text-white/50'>
+        Tap the colors to edit them
+      </div>
+      <div className='pt-2 text-xs text-center text-white/50'>
+        or
       </div>
       <div class="flex items-end justify-end m-2 mb-4">
         <label for="file" class="px-2 py-2 text-xs border rounded text-white/50 bg-white/10 border-white/10 transition-transform transform hover:scale-105">Generate palette from image</label>
@@ -247,10 +255,16 @@ const Home = () => {
             </button>
           </a>
         </div>
+        <button
+          onClick={handleTwitterShare}
+          className='w-auto px-2 py-2 mt-4 text-xs text-white border rounded bg-white/10 border-white/10 transition-transform transform hover:scale-105'>
+          <span className='bg-white/0'>Share on X</span>
+        </button>
       </div>
       <div className='pt-4 text-xs text-center text-white/40'>
         Created by <a href="https://twitter.com/0xSarthak13">0xSarthak13</a>
       </div>
+      
     </div>
   );
 };
