@@ -258,11 +258,6 @@ const Home = () => {
             </button>
           </a>
         </div>
-        <button
-          onClick={handleTwitterShare}
-          className='w-auto px-2 py-2 mt-4 text-xs text-white border rounded bg-white/10 border-white/10 transition-transform transform hover:scale-105'>
-          <span className='bg-white/0'>Share on X</span>
-        </button>
       </div>
       <div className='pt-4 text-xs text-center text-white/40'>
         Created by <a href="https://twitter.com/0xSarthak13">0xSarthak13</a>
